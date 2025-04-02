@@ -1,0 +1,113 @@
+.container {
+  background-color: #000000;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #FFD700;
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.description {
+  font-size: 16px;
+  opacity: 0.8;
+  color: white;
+}
+
+.loaderContainer {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 2s linear infinite;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #00a2ff 30%,
+    #00a2ff 70%,
+    transparent 100%
+  );
+  mask: radial-gradient(circle at center,
+      transparent 0,
+      transparent 28px,
+      black 30px,
+      black 60px,
+      transparent 62px);
+  -webkit-mask: radial-gradient(circle at center,
+      transparent 0,
+      transparent 28px,
+      black 30px,
+      black 60px,
+      transparent 62px);
+  animation: opacityChange 3s linear infinite;
+}
+
+.message {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes opacityChange {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+} 

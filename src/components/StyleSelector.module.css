@@ -1,0 +1,256 @@
+/* Main container styles */
+.container {
+  min-height: 100vh;  /* Full viewport height */
+  background-color: #000000;  /* Black background */
+  color: #ffffff;  /* White text */
+  position: relative;  /* For positioning child elements */
+  overflow: hidden;  /* Hide overflow content */
+}
+
+/* Header bar styles */
+.header {
+  position: fixed;  /* Stick to top */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));  /* Gradient fade effect */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;  /* Keep above other elements */
+}
+
+/* Close button in header */
+.closeButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Sparkle icon styles */
+.sparkle {
+  position: absolute;
+  left: 50px;
+  top: 16px;
+  font-size: 20px;
+  color: #FFD700;  /* Gold color */
+}
+
+/* Right side header icons container */
+.headerRight {
+  display: flex;
+  gap: 16px;  /* Space between icons */
+}
+
+/* Header icon button styles */
+.iconButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Main content area styles */
+.mainContent {
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+/* Main image container styles */
+.imageContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 48px 0 120px;  /* Space for header and bottom elements */
+  overflow: hidden;
+  background-color: #000000;
+}
+
+/* Main image styles */
+.mainImage {
+  height: calc(100vh - 168px);  /* Full height minus header and bottom space */
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;  /* Maintain aspect ratio */
+  display: block;
+}
+
+/* Right side toolbar styles */
+.rightToolbar {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);  /* Center vertically */
+  background: rgba(255, 255, 255, 0.1);  /* Semi-transparent background */
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  backdrop-filter: blur(10px);  /* Blur effect behind toolbar */
+}
+
+/* Tools label text */
+.toolsLabel {
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* Tool button styles in right toolbar */
+.toolButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+/* Tool button hover effect */
+.toolButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Profile images container at bottom */
+.profilesContainer {
+  position: fixed;
+  bottom: 120px;  /* Position above categories */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  overflow-x: auto;  /* Horizontal scroll if needed */
+  z-index: 10;
+}
+
+/* Individual profile button styles */
+.profileButton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;  /* Circular shape */
+  padding: 0;
+  border: 2px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.2s;
+}
+
+/* Profile button hover effect */
+.profileButton:hover {
+  border-color: rgba(255, 215, 0, 0.5);  /* Semi-transparent gold */
+}
+
+/* Selected profile button style */
+.selectedProfile {
+  border-color: #FFD700;  /* Gold border */
+}
+
+/* Profile image styles */
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Categories container styles */
+.categoriesContainer {
+  position: fixed;
+  bottom: 60px;  /* Position above bottom toolbar */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+  overflow-x: auto;  /* Horizontal scroll if needed */
+}
+
+/* Category button styles */
+.categoryButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 8px 16px;
+  cursor: pointer;
+  opacity: 0.6;  /* Dim unselected categories */
+  white-space: nowrap;
+}
+
+/* Selected category style */
+.selectedCategory {
+  opacity: 1;  /* Full opacity for selected category */
+}
+
+/* Search button styles */
+.searchButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Bottom toolbar styles */
+.bottomToolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #1a1a1a;  /* Dark gray background */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);  /* Subtle top border */
+}
+
+/* Bottom toolbar button styles */
+.toolbarButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  min-width: 60px;
+}
+
+/* Bottom toolbar icon styles */
+.toolbarIcon {
+  font-size: 20px;
+}
+
+/* Bottom toolbar label styles */
+.toolbarLabel {
+  font-size: 12px;
+  opacity: 0.8;  /* Slightly dimmed text */
+  text-transform: uppercase;
+} 

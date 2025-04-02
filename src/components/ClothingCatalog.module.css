@@ -1,0 +1,106 @@
+/* Main container styles */
+.container {
+  min-height: 100vh; /* Full viewport height */
+  background-color: #f8f8f8; /* Light gray background */
+  padding: 40px 20px; /* Spacing around content */
+}
+
+/* Page title styles */
+.title {
+  text-align: center; /* Center align the title */
+  color: #333; /* Dark gray text */
+  font-size: 32px; /* Large font size */
+  margin-bottom: 32px; /* Space below title */
+  font-weight: 500; /* Medium font weight */
+}
+
+/* Search container styles */
+.searchContainer {
+  margin: 0 auto 40px; /* Center horizontally with bottom margin */
+  max-width: 800px; /* Limit width for larger screens */
+  padding: 0 20px; /* Horizontal padding */
+}
+
+/* Search input field styles */
+.searchInput {
+  width: 100%; /* Full width of container */
+  padding: 12px 20px; /* Comfortable padding */
+  font-size: 16px; /* Readable font size */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 8px; /* Rounded corners */
+  outline: none; /* Remove default focus outline */
+  background: white; /* White background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+/* Search input focus state */
+.searchInput:focus {
+  border-color: #666; /* Darker border on focus */
+}
+
+/* Search input placeholder text */
+.searchInput::placeholder {
+  color: #999; /* Light gray placeholder text */
+}
+
+/* Grid container for centering and max-width */
+.gridContainer {
+  max-width: 1200px; /* Maximum width on large screens */
+  margin: 0 auto; /* Center horizontally */
+  padding: 0 20px; /* Horizontal padding */
+}
+
+/* Grid layout for items */
+.grid {
+  display: grid; /* Grid display */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive columns */
+  gap: 24px; /* Space between items */
+  background: white; /* White background */
+  padding: 32px; /* Inner padding */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+/* Individual card styles */
+.card {
+  background: white; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Hide overflow */
+  transition: transform 0.2s; /* Smooth hover animation */
+  cursor: pointer; /* Show pointer on hover */
+  border: 1px solid #f0f0f0; /* Light border */
+}
+
+/* Card hover effect */
+.card:hover {
+  transform: translateY(-4px); /* Lift card slightly */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+/* Image container styles */
+.imageContainer {
+  aspect-ratio: 1; /* Square aspect ratio */
+  overflow: hidden; /* Hide overflow */
+  background: #f5f5f5; /* Light gray background */
+  display: flex; /* Flex for centering */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  padding: 16px; /* Padding around image */
+}
+
+/* Product image styles */
+.itemImage {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: contain; /* Maintain aspect ratio */
+}
+
+/* Product name styles */
+.itemName {
+  padding: 12px; /* Padding around text */
+  text-align: center; /* Center text */
+  font-size: 14px; /* Font size */
+  color: #333; /* Dark gray text */
+  font-weight: 500; /* Medium font weight */
+  border-top: 1px solid #f0f0f0; /* Light top border */
+} 

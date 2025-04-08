@@ -61,13 +61,18 @@ export default function Collections() {
     <div className={styles.container}>
       {/* Header section with title and menu */}
       <div className={styles.header}>
-        <button className={styles.backButton} onClick={handleBack}>
-          ←
-        </button>
+       
         <h1>Collections</h1>
         <div className={styles.headerIcons}>
-          <button className={styles.iconButton}>🛒</button>
-          <button className={styles.iconButton}>🔔</button>
+          <button className={styles.iconButton}>
+            <img src="/assets1/images/shopping-cart.png" alt="Cart" />
+          </button>
+          <button className={styles.iconButton}>
+            <img src="/assets1/images/notification.png" alt="Notifications" />
+          </button>
+          <button className={styles.iconButton}>
+            <img src="/assets1/images/setting.png" alt="Settings" />
+          </button>
         </div>
       </div>
 

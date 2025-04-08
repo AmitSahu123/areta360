@@ -10,59 +10,60 @@ import Subscribe from './components/Subscribe';
 import AIProcessing from './components/AIProcessing';
 import StyleEditor from './components/StyleEditor';
 import ClothingCatalog from './components/ClothingCatalog';
+import AILoading from './components/AILoading';
 import styles from './App.module.css';
-import { images } from './assets/images/clothing';
+import clothingImage from './assets/images/clothing';
 
 const clothingItems = [
   { 
     id: 1, 
     name: 'Coat', 
-    image: images.coat
+    image: clothingImage.coat
   },
   { 
     id: 2, 
     name: 'Warm puffer', 
-    image: images.warmPuffer
+    image: clothingImage.warmPuffer
   },
   { 
     id: 3, 
     name: 'Bomber', 
-    image: images.bomber
+    image: clothingImage.bomber
   },
   { 
     id: 4, 
     name: 'Biker jacket', 
-    image: images.bikerJacket
+    image: clothingImage.bikerJacket
   },
   { 
     id: 5, 
     name: 'Denim jacket', 
-    image: images.denimJacket
+    image: clothingImage.denimJacket
   },
   { 
     id: 6, 
     name: 'Blazer (suit)', 
-    image: images.blazer
+    image: clothingImage.blazer
   },
   { 
     id: 7, 
     name: 'Printed/checked', 
-    image: images.printed
+    image: clothingImage.printed
   },
   { 
     id: 8, 
     name: 'Basic tees', 
-    image: images.basicTees
+    image: clothingImage.basicTees
   },
   { 
     id: 9, 
     name: 'Baseball tee', 
-    image: images.baseballTee
+    image: clothingImage.baseballTee
   },
   { 
     id: 10, 
     name: 'Crew neck sweat', 
-    image: images.crewNeck
+    image: clothingImage.crewNeck
   }
 ];
 
@@ -78,6 +79,7 @@ function App() {
         <Route path="/ai-processing" element={<AIProcessing />} />
         <Route path="/style-editor" element={<StyleEditor />} />
         <Route path="/clothing-catalog" element={<ClothingCatalog />} />
+        <Route path="/loading" element={<AILoading />} />
       </Routes>
     </Router>
   );

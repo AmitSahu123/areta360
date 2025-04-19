@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './StyleSelector.module.css';
+import LoadingScreen from './LoadingScreen';
+import { processDirectVTON } from '../services/directVtonService';
 
 const profileImages = [
-  { id: 1, image: '/assets1/1.png', label: 'Style 1' },
-  { id: 2, image: '/assets1/2.png', label: 'Style 2' },
-  { id: 3, image: '/assets1/3.png', label: 'Style 3' },
-  { id: 4, image: '/assets1/4.png', label: 'Style 4' },
-  { id: 5, image: '/assets1/5.png', label: 'Style 5' },
-  { id: 6, image: '/assets1/6.png', label: 'Style 6' },
-  { id: 7, image: '/assets1/7.png', label: 'Style 7' }
+  { id: 1, image: '/assets1/g1.jpeg', label: 'Style 1' },
+  { id: 2, image: '/assets1/g2.jpeg', label: 'Style 2' },
+  { id: 3, image: '/assets1/g3.jpeg', label: 'Style 3' },
+  { id: 4, image: '/assets1/g4.jpeg', label: 'Style 4' },
+  { id: 5, image: '/assets1/g5.jpeg', label: 'Style 5' },
+  { id: 6, image: '/assets1/g6.jpeg', label: 'Style 6' },
+  { id: 7, image: '/assets1/g7.jpeg', label: 'Style 7' }
 ];
 
 // Define the category options that appear above the bottom toolbar
@@ -33,6 +35,7 @@ const toolbarItems = [
 export default function StyleSelector() {
   // Initialize navigation function from React Router
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   // State management using React hooks
   const [selectedProfile, setSelectedProfile] = useState(0);  // Track selected profile image
@@ -40,6 +43,11 @@ export default function StyleSelector() {
   const [isFavorite, setIsFavorite] = useState(false);  // Track favorite status
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingProgress, setProcessingProgress] = useState(0);
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImageFile, setUploadedImageFile] = useState(null);
+  const [uploadError, setUploadError] = useState(null);
+  const [error, setError] = useState(null);
+  const [selectedStyle, setSelectedStyle] = useState(null);
 
   // Handler for close button click
   const handleClose = () => {
@@ -52,17 +60,80 @@ export default function StyleSelector() {
   };
 
   // Handler for profile image selection
-  const handleProfileClick = (index) => {
-    setSelectedProfile(index);  // Update selected profile
-    startAIProcessing(() => {
-      navigate('/style-editor', { 
-        state: { 
-          selectedProfile: index,
-          selectedCategory: selectedCategory,
-          isFavorite: isFavorite
+  const handleProfileClick = async (index) => {
+    setSelectedProfile(index);
+    setIsProcessing(true);
+    setProcessingProgress(0);
+    setError(null); // Reset any previous errors
+
+    try {
+      // Get the garment image
+      const garmentImagePath = profileImages[index].image;
+      const garmentResponse = await fetch(garmentImagePath);
+      if (!garmentResponse.ok) {
+        throw new Error('Failed to load garment image');
+      }
+      const garmentBlob = await garmentResponse.blob();
+      const garmentFile = new File([garmentBlob], `garment_${index}.png`, { type: 'image/png' });
+
+      console.log('Processing images with VTON service...');
+      console.log('Using garment image:', garmentImagePath);
+      
+      // Use the uploaded image if available, otherwise use the default man.png
+      let personImageFile;
+      if (uploadedImageFile) {
+        console.log('Using uploaded image for VTON processing');
+        personImageFile = uploadedImageFile;
+      } else {
+        console.log('Using default man.png for VTON processing');
+        const mainImageResponse = await fetch('/assets1/man.png');
+        if (!mainImageResponse.ok) {
+          throw new Error('Failed to load main image');
         }
-      });
-    });
+        const mainImageBlob = await mainImageResponse.blob();
+        personImageFile = new File([mainImageBlob], 'man.png', { type: 'image/png' });
+      }
+      
+      try {
+        // Process with VTON service
+        console.log('Sending to VTON service - Person image:', personImageFile.name, 'Garment image:', garmentFile.name);
+        
+        // Log the files being sent
+        console.log('Person image file:', personImageFile);
+        console.log('Garment image file:', garmentFile);
+        
+        const result = await processDirectVTON(personImageFile, garmentFile);
+        console.log('VTON service response:', result);
+        
+        if (result && result.success) {
+          // Display the generated image directly on the StyleSelector page
+          console.log('Displaying generated image:', result.result_image);
+          setUploadedImage(result.result_image);
+          setSelectedStyle({
+            name: `Style ${index + 1}`,
+            category: categories[selectedCategory],
+            garmentImage: garmentImagePath
+          });
+        } else {
+          // If API fails, show the default image
+          console.warn('VTON service did not return success, using default image');
+          setUploadedImage('/assets1/man.png');
+          setError('Failed to process image. Using default image.');
+        }
+      } catch (apiError) {
+        // If API fails, show the default image
+        console.warn('VTON service error, using default image:', apiError);
+        setUploadedImage('/assets1/man.png');
+        setError('Failed to process image. Using default image.');
+      }
+    } catch (error) {
+      console.error('Error in handleProfileClick:', error);
+      setError(error.message || 'An error occurred while processing the images');
+      setUploadedImage('/assets1/man.png');
+    } finally {
+      setIsProcessing(false);
+      setProcessingProgress(0);
+    }
   };
 
   const startAIProcessing = (onComplete) => {
@@ -104,8 +175,56 @@ export default function StyleSelector() {
     navigate('/loading'); // Navigate to loading screen first
   };
 
+  const handle3DClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setError(null); // Reset any previous errors
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!validTypes.includes(file.type)) {
+      setError('Please upload a valid image file (JPEG, JPG, or PNG)');
+      return;
+    }
+
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      setError('File size should be less than 5MB');
+      return;
+    }
+
+    try {
+      setIsProcessing(true);
+      setProcessingProgress(30);
+      
+      // Create a URL for the uploaded file
+      const uploadedImageUrl = URL.createObjectURL(file);
+      
+      // Save the uploaded image and file for later use
+      setUploadedImage(uploadedImageUrl);
+      setUploadedImageFile(file);
+      
+      setProcessingProgress(100);
+      setIsProcessing(false);
+      
+      // Show success message
+      console.log('Image uploaded successfully:', uploadedImageUrl);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setError('Failed to upload image. Please try again.');
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
+      {isProcessing && <LoadingScreen progress={processingProgress} />}
+      
       {/* Status Bar */}
   
 
@@ -147,8 +266,8 @@ export default function StyleSelector() {
 
       {/* Main Image */}
       <div className={styles.mainImageContainer}>
-        <img 
-          src="/assets1/man.png"
+        <img
+          src={uploadedImage || "/assets1/man.png"}
           alt="Style preview"
           className={styles.mainImage}
           onError={(e) => {
@@ -156,17 +275,27 @@ export default function StyleSelector() {
             e.target.src = '/assets1/1.png';
           }}
         />
-        {isProcessing && (
-          <div className={styles.processingOverlay}>
-            <div className={styles.processingSpinner}>
-              <div></div>
-            </div>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept=".jpg,.jpeg,.png"
+          style={{ display: 'none' }}
+          aria-label="Upload profile image"
+        />
+        {uploadError && (
+          <div 
+            className={styles.errorMessage}
+            role="alert"
+            aria-live="polite"
+          >
+            {uploadError}
           </div>
         )}
       </div>
 
       {/* 3D View Button */}
-      <button className={styles.cameraButton}>
+      <button className={styles.cameraButton} onClick={handle3DClick}>
         <img 
           src="/assets1/icons/3d.png" 
           alt="3D View"
@@ -177,7 +306,7 @@ export default function StyleSelector() {
       {/* Profile Circles */}
       <div className={styles.profilesContainer}>
         {profileImages.map((profile, index) => (
-          <button
+          <button 
             key={profile.id}
             className={`${styles.profileButton} ${selectedProfile === index ? styles.selectedProfile : ''}`}
             onClick={() => handleProfileClick(index)}
@@ -197,7 +326,7 @@ export default function StyleSelector() {
       {/* Categories */}
       <div className={styles.categoriesContainer}>
         {categories.map((category, index) => (
-          <button
+          <button 
             key={index}
             className={`${styles.categoryButton} ${selectedCategory === index ? styles.selectedCategory : ''}`}
             onClick={() => setSelectedCategory(index)}
@@ -236,4 +365,4 @@ export default function StyleSelector() {
       </div>
     </div>
   );
-} 
+}

@@ -80,6 +80,7 @@ function App() {
         <Route path="/style-editor" element={<StyleEditor />} />
         <Route path="/clothing-catalog" element={<ClothingCatalog />} />
         <Route path="/loading" element={<AILoading />} />
+        <Route path="*" element={<div>Page not found</div>} />
       </Routes>
     </Router>
   );

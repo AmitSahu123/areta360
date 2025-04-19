@@ -1,130 +1,168 @@
 .container {
-  height: 100vh;
-  width: 100%;
-  background-color: #000000;
-  color: white;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .statusBar {
-  height: 44px;
-  padding: 0 16px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-.statusIcons {
-  display: flex;
-  gap: 8px;
+  padding: 8px 16px;
+  background-color: #000000;
+  font-size: 14px;
 }
 
 .header {
-  padding: 8px 16px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  position: fixed;
-  top: 44px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: transparent;
+  padding: 16px;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
 }
 
 .closeButton {
   background: none;
   border: none;
-  color: white;
+  color: #ffffff;
   font-size: 24px;
   cursor: pointer;
-  padding: 0;
-  opacity: 0.9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  left: 16px;
-  top: 16px;
+  padding: 8px;
 }
 
-.closeButton:hover {
-  transform: scale(1.1);
-  opacity: 1;
+.title {
+  text-align: center;
+  flex-grow: 1;
 }
 
-.sparkle {
-  position: absolute;
-  left: 16px;
-  top: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.title h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.starIcon {
-  width: 32px;
-  height: 32px;
-  opacity: 1;
+.title p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #888;
 }
 
 .headerRight {
-  position: absolute;
-  right: 16px;
-  top: 16px;
   display: flex;
-  flex-direction: column;
   gap: 16px;
-  align-items: center;
 }
 
 .iconButton {
   background: none;
   border: none;
-  padding: 0;
+  padding: 8px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.cartIcon, .heartIcon {
+.heartIcon,
+.cartIcon {
   width: 24px;
   height: 24px;
-  opacity: 0.9;
-}
-
-.mainContent {
-  height: 100%;
-  position: relative;
+  object-fit: contain;
 }
 
 .mainImageContainer {
-  height: calc(100vh - 180px);
-  width: 100%;
+  position: relative;
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  margin-top: 80px;
+  padding: 20px;
+  background-color: #1a1a1a;
 }
 
 .mainImage {
-  height: 100%;
-  width: auto;
-  max-height: calc(100vh - 200px);
+  max-width: 100%;
+  max-height: 70vh;
   object-fit: contain;
-  object-position: center;
+  border-radius: 8px;
+}
+
+.garmentPreview {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.garmentImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #333;
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+}
+
+.errorContainer h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.errorContainer p {
+  color: #ff4444;
+  margin-bottom: 24px;
+}
+
+.errorContainer button {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.errorContainer button:hover {
+  background-color: #cccccc;
 }
 
 .rightToolbar {
@@ -139,6 +177,7 @@
   flex-direction: column;
   gap: 16px;
   z-index: 100;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   max-height: calc(100vh - 400px);
   overflow-y: auto;
@@ -187,17 +226,6 @@
   opacity: 1;
 }
 
-.toolButton:nth-child(4)::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 32px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 .profilesContainer {
   position: fixed;
   bottom: 120px;
@@ -240,7 +268,7 @@
   right: 0;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
   padding: 0 16px;
   z-index: 100;
 }
@@ -274,10 +302,6 @@
   align-items: center;
   justify-content: center;
   margin-left: 8px;
-}
-
-.searchButton:hover {
-  opacity: 1;
 }
 
 .searchIcon {
@@ -319,17 +343,6 @@
   min-width: 48px;
 }
 
-.toolbarButton:nth-child(4)::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 32px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 .toolbarIcon {
   width: 20px;
   height: 20px;
@@ -343,35 +356,6 @@
   letter-spacing: 0.2px;
   font-weight: 400;
   text-align: center;
-}
-
-.cameraButton {
-  position: fixed;
-  right: 16px;
-  bottom: 120px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(58, 58, 58, 0.8);
-  backdrop-filter: blur(10px);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.cameraIcon {
-  width: 24px;
-  height: 24px;
-  opacity: 0.9;
-}
-
-@media (max-width: 1024px) {
-  .rightToolbar {
-    right: 16px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -392,7 +376,6 @@
   .toolButton {
     width: 36px;
     height: 36px;
-    font-size: 18px;
   }
 
   .profileButton {
@@ -401,7 +384,7 @@
   }
 
   .categoryButton {
-    padding: 6px 16px;
+    padding: 6px 12px;
     font-size: 13px;
   }
 }
@@ -421,7 +404,7 @@
   }
 
   .categoryButton {
-    padding: 6px 14px;
+    padding: 6px 10px;
     font-size: 12px;
   }
 
@@ -430,11 +413,12 @@
   }
 
   .toolbarIcon {
-    font-size: 20px;
+    width: 18px;
+    height: 18px;
   }
 
   .toolbarLabel {
-    font-size: 11px;
+    font-size: 9px;
   }
 }
 
@@ -451,14 +435,6 @@
     height: calc(100vh - 148px);
   }
 
-  .profilesContainer {
-    bottom: 100px;
-  }
-
-  .categoriesContainer {
-    bottom: 60px;
-  }
-
   .bottomToolbar {
     height: 60px;
   }
@@ -468,48 +444,4 @@
   .mainImage {
     image-rendering: -webkit-optimize-contrast;
   }
-}
-
-.toolButton:nth-child(4)::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 32px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.toolbarButton:nth-child(4)::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 32px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.categoryButton:nth-child(4)::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 32px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.profileButton:nth-child(4)::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 32px;
-  background-color: rgba(255, 255, 255, 0.2);
 } 

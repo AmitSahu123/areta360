@@ -46,12 +46,35 @@
   font-size: 13px;
   font-weight: 500;
   color: #2c2c2c;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   border-top: 1px solid #f0f0f0;
   position: absolute;
   bottom: 0;
   width: 100%;
+  /* Add vendor prefixes and proper fallbacks */
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
+  /* Enable GPU acceleration */
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  /* Optimize performance */
+  will-change: transform;
+  /* Ensure proper z-index stacking */
+  z-index: 1;
+}
+
+/* Fallback styles for browsers without backdrop-filter support */
+@supports not ((-webkit-backdrop-filter: blur(5px)) or (backdrop-filter: blur(5px))) {
+  .label {
+    background: rgba(255, 255, 255, 0.98);
+  }
+}
+
+/* Firefox specific styles (Firefox doesn't support backdrop-filter well) */
+@-moz-document url-prefix() {
+  .label {
+    background: rgba(255, 255, 255, 0.98);
+  }
 }
 
 .placeholder {
